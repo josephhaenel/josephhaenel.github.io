@@ -1,0 +1,106 @@
+#profilePic {
+    width: 9vw;  /* Initial relative width */
+    height: 9vw; /* Keeps the aspect ratio */
+    border-radius: 50%;
+    display: block;
+    margin: 10px auto; /* Centers the image horizontally and adds some top and bottom margin */
+    border: 2px solid #495057;
+    object-fit: cover;
+}
+
+.hoverable:hover {
+    color: #e9ecef;
+}
+
+.noHref {
+    text-decoration: none;   /* Removes the underline from the link */
+    color: inherit;          /* Uses the parent's text color */
+}
+.profileName {
+    display: block;
+    text-align: center;
+    font-size: 2vw;
+    font-family: "Hubot Sans";
+    margin-top: 1vw;
+    text-decoration: none;   /* Removes the underline from the link */
+    color: inherit;          /* Uses the parent's text color */
+}
+
+.profileDesc.profileResidence {
+    color: white;
+    text-align: left;
+    margin-top: 0px;
+}
+
+.socials {
+    display: flex;
+    align-items: center;  /* Optional: vertically aligns the icons in case they have different heights */
+    justify-content: center; /* Optional: centers the icons within the container */  
+}
+
+.profileDesc {
+    display: block;
+    text-align: center;
+    font-size: 1vw;
+    font-family: "Sans-serif";
+    margin-top: 1vw;
+    color: #777f88;
+}
+
+.profileInfo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.5vw;
+}
+
+.profileCity {
+    text-align: right;
+    flex-grow: 1;
+    text-align: right;
+    padding-left: 1vw; /* Optional: adds some space between 'Residence' and the city */
+}
+
+
+body {
+    display: flex;            /* Flexbox layout */
+    flex-wrap: wrap;          /* Allows elements to wrap onto the next line */
+    min-height: 100vh;        /* Full viewport height */
+    background-color: rgb(33, 30, 38);
+    color: #ffffff;
+    margin: 0;
+}
+
+.sidebar {
+    width: 15%;               /* Width of the sidebar */
+    padding: 20px;
+    box-sizing: border-box;
+    flex-shrink: 0;           /* Prevents sidebar from shrinking */
+}
+
+.main-content {
+    width: 80%;               /* Width of the main content area */
+    padding: 20px;
+    box-sizing: border-box;
+    flex-shrink: 0;           /* Prevents main content from shrinking */
+    flex-grow: 1;             /* Allows main content to grow and take remaining space */
+}
+
+footer {
+    width: 100%;              /* Full width of the page */
+    background-color: rgb(33, 37, 38);
+    color: whitesmoke;
+    padding: 20px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+hr {
+    border: none;                 /* Remove the default border */
+    height: 1px;                 /* Set the height of the line */
+    background-color: #545458;      /* Set the line color */
+    margin-top: 20px;            /* Optional: Space above the line */
+    margin-bottom: 20px;         /* Optional: Space below the line */
+}
+
+
