@@ -3,8 +3,11 @@ const mouse = {
     y: undefined
 };
 
+const sidebarContent = document.getElementById('sidebar-content');
+
+
 function getParallaxOffset() {
-    const maxOffset = 10; // This determines the maximum movement in pixels. Adjust as needed.
+    const maxOffset = 10; // This determines the maximum movement in pixels
 
     // Calculate the distance from the center for both axes
     const dx = (mouse.x - innerWidth / 2) / (innerWidth / 2);

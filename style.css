@@ -64,8 +64,8 @@ canvas {
 /*Profile Picture CSS */
 .pfp {
     border-radius: 50%; /* This makes the image round */
-    width: 100px; /* Adjust as needed */
-    height: 100px; /* Adjust as needed */
+    width: 100px; 
+    height: 100px; 
     object-fit: cover; /* Ensures the image covers the dimensions without distortion */
     border: 3px solid #fff; /* Optional white border */
 }
@@ -127,31 +127,31 @@ canvas {
     border-radius: 50%; /* This makes the image round */
     display: block;
     margin: 10px auto;
-    width: 9vw; /* Adjust as needed */
-    height: 9vw; /* Adjust as needed */
+    width: 9vw; 
+    height: 9vw; 
     margin-bottom: 20px; /* Space between the PFP and text */
     object-fit: cover;
 }
 
 #sidebar-content p {
     text-align: left;
-    width: 80%; /* Adjust based on your preference */
-    color: #fff; /* Adjust text color as needed */
+    width: 80%; 
+    color: #fff; 
 }
 
 
 .center-text {
     text-align: center;
     width: 95%; /* Use the full width */
-    color: #c7c7c7; /* Adjust as needed */
+    color: #c7c7c7; 
     margin-bottom: 5%
 }
 
 .dual-text {
     display: flex; /* Use flexbox to position the children (spans) */
     justify-content: space-between; /* Push the children to the extremes (left and right) */
-    width: 80%; /* Adjust based on your preference */
-    color: #fff; /* Adjust text color as needed */
+    width: 80%; 
+    color: #fff; 
     margin: 5px 0; /* Some spacing between lines */
 }
 
