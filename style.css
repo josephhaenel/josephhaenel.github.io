@@ -1,11 +1,16 @@
-#profilePic {
-    width: 9vw;  /* Initial relative width */
-    height: 9vw; /* Keeps the aspect ratio */
-    border-radius: 50%;
+body {
+    overflow: hidden;
+}
+
+
+body, html {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    height: 100%;
+}
+canvas {
     display: block;
-    margin: 10px auto; /* Centers the image horizontally and adds some top and bottom margin */
-    border: 2px solid #495057;
-    object-fit: cover;
 }
 
 .hoverable:hover {
@@ -15,92 +20,138 @@
 .noHref {
     text-decoration: none;   /* Removes the underline from the link */
     color: inherit;          /* Uses the parent's text color */
-}
-.profileName {
-    display: block;
-    text-align: center;
-    font-size: 2vw;
-    font-family: "Hubot Sans";
-    margin-top: 1vw;
-    text-decoration: none;   /* Removes the underline from the link */
-    color: inherit;          /* Uses the parent's text color */
+    pointer-events: auto;
 }
 
-.profileDesc.profileResidence {
-    color: white;
+#overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* This makes sure mouse events pass through to the canvas below */
+}
+
+#center-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3em;
+    color: #000000;
+    pointer-events: auto;
+}
+
+#menu {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 20px; /* Space between menu items */
+    pointer-events: auto;
+}
+
+#menu a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+#menu a:hover {
+    color: #aaa;
+}
+
+/*Profile Picture CSS */
+.pfp {
+    border-radius: 50%; /* This makes the image round */
+    width: 100px; /* Adjust as needed */
+    height: 100px; /* Adjust as needed */
+    object-fit: cover; /* Ensures the image covers the dimensions without distortion */
+    border: 3px solid #fff; /* Optional white border */
+}
+
+#pfp-center {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#pfp-top-left {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+/*End pfp CS */
+
+#social-icons {
+    position: absolute;
+    top: calc(50% + 70px); 
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 50px; /* Adjust space between icons */
+}
+
+#social-icons a {
+    color: #000000;
+    pointer-events: auto;
+    font-size: 24px; /* Adjust icon size */
+    transition: color 0.3s;
+}
+
+#social-icons a:hover {
+    color: #504f4f; /* Change color on hover */
+}
+
+#sidebar {
+    overflow: hidden;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 20%; /* Sidebar width */
+    height: 0;  /* Initial height */
+    background-color: #333; /* Adjust color as needed */
+    transition: height 0.5s; /* Smooth transition */
+}
+
+#sidebar-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* This will center the PFP and text horizontally */
+    justify-content: center; /* This will center the content vertically */
+    height: 100%;
+}
+
+#sidebar-pfp {
+    border-radius: 50%; /* This makes the image round */
+    display: block;
+    margin: 10px auto;
+    width: 9vw; /* Adjust as needed */
+    height: 9vw; /* Adjust as needed */
+    margin-bottom: 20px; /* Space between the PFP and text */
+    object-fit: cover;
+}
+
+#sidebar-content p {
     text-align: left;
-    margin-top: 0px;
+    width: 80%; /* Adjust based on your preference */
+    color: #fff; /* Adjust text color as needed */
 }
 
-.socials {
-    display: flex;
-    align-items: center;  /* Optional: vertically aligns the icons in case they have different heights */
-    justify-content: center; /* Optional: centers the icons within the container */  
-}
 
-.profileDesc {
-    display: block;
+.center-text {
     text-align: center;
-    font-size: 1vw;
-    font-family: "Sans-serif";
-    margin-top: 1vw;
-    color: #777f88;
+    width: 95%; /* Use the full width */
+    color: #c7c7c7; /* Adjust as needed */
+    margin-bottom: 5%
 }
 
-.profileInfo {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 0.5vw;
+.dual-text {
+    display: flex; /* Use flexbox to position the children (spans) */
+    justify-content: space-between; /* Push the children to the extremes (left and right) */
+    width: 80%; /* Adjust based on your preference */
+    color: #fff; /* Adjust text color as needed */
+    margin: 5px 0; /* Some spacing between lines */
 }
-
-.profileCity {
-    text-align: right;
-    flex-grow: 1;
-    text-align: right;
-    padding-left: 1vw; /* Optional: adds some space between 'Residence' and the city */
-}
-
-
-body {
-    display: flex;            /* Flexbox layout */
-    flex-wrap: wrap;          /* Allows elements to wrap onto the next line */
-    min-height: 100vh;        /* Full viewport height */
-    background-color: rgb(33, 30, 38);
-    color: #ffffff;
-    margin: 0;
-}
-
-.sidebar {
-    width: 15%;               /* Width of the sidebar */
-    padding: 20px;
-    box-sizing: border-box;
-    flex-shrink: 0;           /* Prevents sidebar from shrinking */
-}
-
-.main-content {
-    width: 80%;               /* Width of the main content area */
-    padding: 20px;
-    box-sizing: border-box;
-    flex-shrink: 0;           /* Prevents main content from shrinking */
-    flex-grow: 1;             /* Allows main content to grow and take remaining space */
-}
-
-footer {
-    width: 100%;              /* Full width of the page */
-    background-color: rgb(33, 37, 38);
-    color: whitesmoke;
-    padding: 20px;
-    text-align: center;
-    box-sizing: border-box;
-}
-
-hr {
-    border: none;                 /* Remove the default border */
-    height: 1px;                 /* Set the height of the line */
-    background-color: #545458;      /* Set the line color */
-    margin-top: 20px;            /* Optional: Space above the line */
-    margin-bottom: 20px;         /* Optional: Space below the line */
-}
-
 
