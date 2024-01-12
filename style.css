@@ -29,18 +29,19 @@ canvas {
     left: 0;
     width: 100%;
     height: 100%;
+    display: flex; /* Enable Flexbox */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
     pointer-events: none; /* This makes sure mouse events pass through to the canvas below */
 }
 
 #center-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     font-size: 3em;
     color: #000000;
     pointer-events: auto;
+    text-align: center; /* Ensure text is centered if it goes onto multiple lines */
 }
+
 
 #menu {
     position: absolute;
@@ -111,7 +112,8 @@ canvas {
     left: 0;
     width: 20%; /* Sidebar width */
     height: 0;  /* Initial height */
-    background-color: #333; /* Adjust color as needed */
+    background-color: rgba(51, 51, 51, 0.8); /* Sidebar background color */
+    backdrop-filter: blur(5px);
     transition: height 0.5s; /* Smooth transition */
 }
 
@@ -124,14 +126,33 @@ canvas {
 }
 
 #sidebar-pfp {
-    border-radius: 50%; /* This makes the image round */
+    border-radius: 50%; /* Makes the image round */
     display: block;
     margin: 10px auto;
-    width: 9vw; 
-    height: 9vw; 
+    width: 12vw; /* Increase the base size */
+    height: 12vw;
     margin-bottom: 20px; /* Space between the PFP and text */
     object-fit: cover;
+    max-width: 150px; /* Maximum size */
+    max-height: 150px;
+    min-width: 80px; /* Minimum size */
+    min-height: 80px;
 }
+
+#scrollUpText {
+    display: none;
+    position: fixed;
+    bottom: 20px; /* Adjust the distance from the bottom */
+    left: 50%;
+    transform: translateX(-50%);
+    color: #888; /* A softer color */
+    font-size: 16px; /* Adjust the font size */
+    text-shadow: 1px 1px 2px #000; /* Subtle shadow for better readability */
+    opacity: 1;
+    transition: opacity 0.5s ease; /* Smooth transition for fading */
+    pointer-events: none; /* Ensures it doesn't interfere with other clickable elements */
+}
+
 
 #sidebar-content p {
     text-align: left;
@@ -154,4 +175,11 @@ canvas {
     color: #fff; 
     margin: 5px 0; /* Some spacing between lines */
 }
+
+@media screen and (max-width: 768px) {
+    #sidebar {
+        display: none;
+    }
+}
+
 

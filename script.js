@@ -26,6 +26,13 @@ class Dot {
         this.dx = dx;
         this.dy = dy;
         this.radius = radius;
+        this.opacity = 1; // Fully opaque initially
+    }
+
+    fadeOut() {
+        if (this.opacity > 0) {
+            this.opacity -= 0.1; // Adjust fade out speed here
+        }
     }
 
     isHovered() {
@@ -57,7 +64,9 @@ class Dot {
     // Draw dot on the canvas
     draw(ctx) {
         const offset = getParallaxOffset();
-    
+        ctx.globalAlpha = this.opacity;
+        ctx.fill();
+        ctx.globalAlpha = 1; // Reset globalAlpha so it doesn't affect
         ctx.beginPath();
         ctx.arc(this.x + offset.x, this.y + offset.y, this.radius, 0, Math.PI * 2, false);
         ctx.fill();
@@ -69,9 +78,15 @@ const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-const dots = [];
+// Define a density for the dots (number of dots per pixel squared)
+const dotDensity = 0.0001; // Adjust this value based on desired density
 
-for (let i = 0; i < 100; i++) {
+// Calculate the total number of dots based on screen size
+const totalDots = Math.floor(innerWidth * innerHeight * dotDensity);
+
+let dots = []; 
+
+for (let i = 0; i < totalDots; i++) {
     let radius = 2;
     let x = Math.random() * (innerWidth - 2 * radius) + radius;
     let y = Math.random() * (innerHeight - 2 * radius) + radius;
@@ -93,9 +108,32 @@ function drawLines(dot1, dot2) {
     }
 }
 
+function addNewDot() {
+    let radius = 2;
+    let x = Math.random() * (innerWidth - 2 * radius) + radius;
+    let y = Math.random() * (innerHeight - 2 * radius) + radius;
+    let dx = (Math.random() - 0.5) * 2;
+    let dy = (Math.random() - 0.5) * 2;
+    dots.push(new Dot(x, y, dx, dy, radius));
+}
+
 
 function animate() {
     ctx.clearRect(0, 0, innerWidth, innerHeight);
+
+        // Fade out excess dots
+    if (dots.length > targetDotsCount) {
+        for (let i = targetDotsCount; i < dots.length; i++) {
+            dots[i].fadeOut();
+        }
+    }
+
+    // Render and update dots
+    dots = dots.filter(dot => dot.opacity > 0); // Remove fully faded-out dots
+
+    if (dots.length < targetDotsCount) {
+        addNewDot();
+    }
 
     for (let dot of dots) {
         dot.update();
@@ -119,7 +157,32 @@ canvas.addEventListener('mousemove', function(event) {
 const sidebar = document.getElementById('sidebar');
 let accumulatedScroll = 0; 
 
+const scrollUpText = document.getElementById('scrollUpText');
+
+if (getComputedStyle(sidebar).display !== 'none') {
+    // Show the scroll up text
+    scrollUpText.style.display = 'block';
+} else {
+    // Hide the scroll up text
+    scrollUpText.style.display = 'none';
+}
+
 function handleScroll(event) {
+
+    const sidebar = document.getElementById('sidebar');
+    const scrollUpText = document.getElementById('scrollUpText');
+
+    if (getComputedStyle(sidebar).display !== 'none') {
+        // Show the scroll up text
+        scrollUpText.style.display = 'block';
+    } else {
+        // Hide the scroll up text
+        scrollUpText.style.display = 'none';
+    }
+
+    if (sidebar.style.display === 'none' || getComputedStyle(sidebar).display === 'none') {
+        return; // Exit the function if the sidebar is hidden
+    }
     // Determine the scroll direction (positive for down, negative for up)
     const scrollDirection = event.deltaY;
 
@@ -127,16 +190,58 @@ function handleScroll(event) {
     accumulatedScroll += scrollDirection;
 
     // Normalize the accumulated scroll to a value between 0 and 1
-    const normalizedScroll = Math.min(Math.max(accumulatedScroll / 10, 0), 1); // 100 makes for a single scroll to pul it up
+    const normalizedScroll = Math.min(Math.max(accumulatedScroll / 10, 0), 1);
 
     // Adjust the height of the sidebar
     sidebar.style.height = `${normalizedScroll * 100}%`;
 
-    const contentPadding = (1 - normalizedScroll) * 200; // 200 is an arbitrary value; adjust as needed
+    const contentPadding = (1 - normalizedScroll) * 200; 
     sidebarContent.style.paddingBottom = `${contentPadding}px`;
+
+    // Adjust the opacity of the "Scroll Up" text based on scroll direction
+    if (scrollDirection < 0) {
+        // Scrolling up
+        scrollUpText.style.opacity = 1;
+    } else {
+        // Scrolling down or stationary
+        scrollUpText.style.opacity = 0;
+    }
 }
 
 window.addEventListener('wheel', handleScroll);
+
+// Global variable to keep track of the target number of dots
+let targetDotsCount = dots.length;
+function handleResize() {
+    // Update canvas dimensions
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    // Calculate the new target number of dots based on the new dimensions
+    const newTargetDotsCount = Math.floor(innerWidth * innerHeight * dotDensity);
+    targetDotsCount = Math.max(targetDotsCount, newTargetDotsCount);
+
+    // Reposition dots within the new dimensions and remove fully faded-out dots
+    dots = dots.filter(dot => {
+        if (dot.opacity > 0) {
+            dot.x = Math.min(dot.x, canvas.width - dot.radius);
+            dot.y = Math.min(dot.y, canvas.height - dot.radius);
+            return true;
+        }
+        return false;
+    });
+}
+
+window.addEventListener('resize', handleResize);
+
+
+
+// Add the resize event listener
+window.addEventListener('resize', handleResize);
+
+
+
+
 
 
 
